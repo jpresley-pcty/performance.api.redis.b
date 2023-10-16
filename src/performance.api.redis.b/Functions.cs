@@ -38,7 +38,7 @@ public class Functions
     public string Default()
     {
         const string docs = @"Performance API Redis A B testing.
-/direct/{key} - retrieves data from redis directly, key is a redis key ref small|medium|large";
+POST /direct - retrieves data from redis directly, { Key: small|medium|large, RedisEndpoint: string }";
         return docs;
     }
 
@@ -47,9 +47,9 @@ public class Functions
     /// </summary>
     /// <returns>200 status</returns>
     [LambdaFunction(@Policies = "AWSLambdaBasicExecutionRole,AmazonVPCFullAccess,AmazonElastiCacheFullAccess")]
-    [HttpApi(LambdaHttpMethod.Get, "/direct/{key}")]
-    public async Task<IHttpResult> DirectData(string key, ILambdaContext context)
+    [HttpApi(LambdaHttpMethod.Post, "/direct")]
+    public async Task<IHttpResult> DirectData([FromBody] DataRequest request, ILambdaContext context)
     {
-        return HttpResults.Ok(await _redisService.DirectData(key, context));
+        return HttpResults.Ok(await _redisService.DirectData(request, context));
     }
 }

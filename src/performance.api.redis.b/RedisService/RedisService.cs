@@ -1,8 +1,6 @@
 using System.Diagnostics;
 using System.Text.Json;
 using Amazon.Lambda.Core;
-using performance.api.redis.b;
-using performance.api.redis.b.RedisService;
 using StackExchange.Redis;
 
 namespace performance.api.redis.b.RedisService;
@@ -13,21 +11,21 @@ namespace performance.api.redis.b.RedisService;
 /// </summary>
 public class RedisService : IRedisService
 {
-    public async Task<ResultTime> DirectData(string key, ILambdaContext context)
+    public async Task<ResultTime> DirectData(DataRequest request, ILambdaContext context)
     {
         var stopwatch = new Stopwatch();
         stopwatch.Start();
-
-        var redis = await ConnectionMultiplexer.ConnectAsync(Environment.GetEnvironmentVariable("redisEndpoint")!);
+        context.Logger.LogInformation(JsonSerializer.Serialize(request));
+        var redis = await ConnectionMultiplexer.ConnectAsync(request.RedisEndpoint);
         var db = redis.GetDatabase();
-        var data = await db.HashGetAsync(key,"test");
+        var data = await db.HashGetAsync(request.Key,"test");
 
         stopwatch.Stop();
         var result = new ResultTime()
         {
             Message = $"Retrieve cluster data. Total time in ms: {stopwatch.ElapsedMilliseconds}",
             ElapsedTime = stopwatch.ElapsedMilliseconds,
-            Data = JsonSerializer.Deserialize<List<int>>(data)
+            Data = JsonSerializer.Deserialize<List<int>>(data!)
         };
 
         context.Logger.LogInformation(result.Message);

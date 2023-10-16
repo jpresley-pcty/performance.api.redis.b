@@ -8,5 +8,5 @@ namespace performance.api.redis.b.RedisService;
 /// </summary>
 public interface IRedisService
 {
-    Task<ResultTime> DirectData(string key, ILambdaContext context);
+    Task<ResultTime> DirectData(DataRequest request, ILambdaContext context);
 }

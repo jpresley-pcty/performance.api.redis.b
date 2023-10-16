@@ -21,11 +21,6 @@
           "AmazonVPCFullAccess",
           "AmazonElastiCacheFullAccess"
         ],
-        "Environment": {
-          "Variables": {
-            "redisEndpoint": "redis-east-2.4hlkeh.ng.0001.use1.cache.amazonaws.com:6379"
-          }
-        },
         "VpcConfig": {
           "SubnetIds": [
             "subnet-065ee8a3f968fbc46",
@@ -57,7 +52,7 @@
       "Metadata": {
         "Tool": "Amazon.Lambda.Annotations",
         "SyncedEvents": [
-          "RootGet"
+          "RootPost"
         ]
       },
       "Properties": {
@@ -70,11 +65,6 @@
           "AmazonVPCFullAccess",
           "AmazonElastiCacheFullAccess"
         ],
-        "Environment": {
-          "Variables": {
-            "redisEndpoint": "redis-east-2.4hlkeh.ng.0001.use1.cache.amazonaws.com:6379"
-          }
-        },
         "VpcConfig": {
           "SubnetIds": [
             "subnet-065ee8a3f968fbc46",
@@ -91,11 +81,11 @@
         "PackageType": "Zip",
         "Handler": "performance.api.redis.b::performance.api.redis.b.Functions_DirectData_Generated::DirectData",
         "Events": {
-          "RootGet": {
+          "RootPost": {
             "Type": "HttpApi",
             "Properties": {
-              "Path": "/direct/{key}",
-              "Method": "GET"
+              "Path": "/direct",
+              "Method": "POST"
             }
           }
         }
