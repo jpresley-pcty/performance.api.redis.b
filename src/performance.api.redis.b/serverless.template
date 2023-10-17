@@ -23,15 +23,11 @@
         ],
         "VpcConfig": {
           "SubnetIds": [
-            "subnet-065ee8a3f968fbc46",
-            "subnet-0943865ad46f3e971",
-            "subnet-075283d455fe10715",
-            "subnet-0a8272f332bce8854",
-            "subnet-0816c23450f1cb621",
-            "subnet-0e219e4ce4fabd342"
+            "subnet-0c6fd1c3fe9fbf1cd",
+            "subnet-0d7bc38d0568f8644"
           ],
           "SecurityGroupIds": [
-            "sg-0b2b0fbc1c18ebb7d"
+            "sg-043c7e90614ebb90e"
           ]
         },
         "PackageType": "Zip",
@@ -67,15 +63,11 @@
         ],
         "VpcConfig": {
           "SubnetIds": [
-            "subnet-065ee8a3f968fbc46",
-            "subnet-0943865ad46f3e971",
-            "subnet-075283d455fe10715",
-            "subnet-0a8272f332bce8854",
-            "subnet-0816c23450f1cb621",
-            "subnet-0e219e4ce4fabd342"
+            "subnet-0d7bc38d0568f8644",
+            "subnet-0c6fd1c3fe9fbf1cd"
           ],
           "SecurityGroupIds": [
-            "sg-0b2b0fbc1c18ebb7d"
+            "sg-043c7e90614ebb90e"
           ]
         },
         "PackageType": "Zip",
@@ -85,6 +77,46 @@
             "Type": "HttpApi",
             "Properties": {
               "Path": "/direct",
+              "Method": "POST"
+            }
+          }
+        }
+      }
+    },
+    "performanceapiredisbFunctionsSetupGenerated": {
+      "Type": "AWS::Serverless::Function",
+      "Metadata": {
+        "Tool": "Amazon.Lambda.Annotations",
+        "SyncedEvents": [
+          "RootPost"
+        ]
+      },
+      "Properties": {
+        "Runtime": "dotnet6",
+        "CodeUri": ".",
+        "MemorySize": 256,
+        "Timeout": 30,
+        "Policies": [
+          "AWSLambdaBasicExecutionRole",
+          "AmazonVPCFullAccess",
+          "AmazonElastiCacheFullAccess"
+        ],
+        "VpcConfig": {
+          "SubnetIds": [
+            "subnet-0d7bc38d0568f8644",
+            "subnet-0c6fd1c3fe9fbf1cd"
+          ],
+          "SecurityGroupIds": [
+            "sg-043c7e90614ebb90e"
+          ]
+        },
+        "PackageType": "Zip",
+        "Handler": "performance.api.redis.b::performance.api.redis.b.Functions_Setup_Generated::Setup",
+        "Events": {
+          "RootPost": {
+            "Type": "HttpApi",
+            "Properties": {
+              "Path": "/setup",
               "Method": "POST"
             }
           }

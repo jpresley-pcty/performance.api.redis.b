@@ -38,8 +38,20 @@ public class Functions
     public string Default()
     {
         const string docs = @"Performance API Redis A B testing.
+POST /setup - adds data to each redis endpoint passed in { RedisEndpoint: string }
 POST /direct - retrieves data from redis directly, { Key: small|medium|large, RedisEndpoint: string }";
         return docs;
+    }
+
+    /// <summary>
+    /// Setup the data for redis cluster.
+    /// </summary>
+    /// <returns>200 status</returns>
+    [LambdaFunction(@Policies = "AWSLambdaBasicExecutionRole,AmazonVPCFullAccess,AmazonElastiCacheFullAccess")]
+    [HttpApi(LambdaHttpMethod.Post, "/setup")]
+    public async Task<IHttpResult> Setup([FromBody] SetupRequest request, ILambdaContext context)
+    {
+        return HttpResults.Ok(await _redisService.SetupData(request, context));
     }
 
     /// <summary>
