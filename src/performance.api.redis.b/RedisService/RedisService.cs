@@ -44,7 +44,7 @@ public class RedisService : IRedisService
             new HashEntry("test", JsonSerializer.Serialize(testList))
         });
 
-        for (var i = 0; i <= 500000; i++)
+        for (var i = 0; i <= 400000; i++)
         {
             testList.Add(ran.Next());
         }
